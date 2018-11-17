@@ -27,7 +27,7 @@ public class ShortUrlServiceImpl implements IShortUrlService {
         for (int i=0;i<= count;i++){
             Map<String,Object> result = new HashMap<String,Object>();
             this.length = length;
-            String oldUrl = "https://dmzstg1.pa18.com/ebusiness/online/index.html?mediaSource%3DSC03-XXTB-DRICET-GFWX&params="+i;
+            String oldUrl = "https://baidu.com?params="+i;
             String shortUrl = this.generate(oldUrl);
             ShortUrlModel sm = new ShortUrlModel();
             sm.setOldUrl(oldUrl);
