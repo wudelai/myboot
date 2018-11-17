@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.wdl.myboot.mapper.ShortUrlMapper" >
+
+    <resultMap id="ShortUrlMap" type="com.wdl.myboot.model.ShortUrlModel">
+        <result column="short_url" property="shortUrl" jdbcType="VARCHAR"/>
+        <result column="old_url" property="oldUrl" jdbcType="VARCHAR"/>
+        <result column="ex_time" property="exTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryShortUrl" parameterType="java.lang.String" resultType="java.lang.String">
+        select old_url from wdltest.short_url_test where short_url = #{shortUrl}
+    </select>
+    <insert id="insertShortUrl" parameterType="com.wdl.myboot.model.ShortUrlModel">
+        insert into wdltest.short_url_test (short_url,old_url)values (#{shortUrl,jdbcType=VARCHAR},#{oldUrl,jdbcType=VARCHAR})
+    </insert>
+</mapper>
