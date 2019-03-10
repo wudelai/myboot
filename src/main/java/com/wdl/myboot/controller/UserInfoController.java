@@ -19,7 +19,11 @@ public class UserInfoController {
         System.out.println("into.........");
         return "index";
     }
-
+//    @RequestMapping
+//    public String share(){
+//        System.out.println("into.........");
+//        return "index";
+//    }
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
     @ResponseBody
     public String hello(){

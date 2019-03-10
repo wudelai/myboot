@@ -4,6 +4,8 @@ import com.wdl.myboot.mapper.ShortUrlMapper;
 import com.wdl.myboot.model.ShortUrlModel;
 import com.wdl.myboot.service.IShortUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -37,6 +39,16 @@ public class ShortUrlServiceImpl implements IShortUrlService {
             }catch(Exception e){
                 result.put("errorCode","999");
             }
+            //调研异步方法
+            System.out.println("调用异步方法开始");
+            String xx = getXXUrl();
+            System.out.println("调用异步方法结束 xx"+xx);
+
+
+            System.out.println("调用异步方法2开始");
+             getXXUrl2();
+            System.out.println("调用异步方法2结束");
+
         }
 
 
@@ -66,5 +78,17 @@ public class ShortUrlServiceImpl implements IShortUrlService {
     }
     public String seek(String shortUrl) {
         return shortUrlMapper.queryShortUrl(shortUrl);
+    }
+
+    @Async
+    public String getXXUrl(){
+        System.out.println("进入异步方法");
+//        new AsyncResult<>();
+        return String.valueOf(System.currentTimeMillis());
+    }
+    @Async
+    public void getXXUrl2(){
+        System.out.println("进入异步方法 getXXUrl2");
+//        new AsyncResult<>();
     }
 }

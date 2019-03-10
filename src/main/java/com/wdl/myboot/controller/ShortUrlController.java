@@ -1,19 +1,24 @@
 package com.wdl.myboot.controller;
 
+import com.wdl.myboot.service.IRedisClient;
 import com.wdl.myboot.service.IShortUrlService;
 import com.wdl.myboot.service.IUserInfoService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller("/share")
+//@Scope(ConfigurableListableBeanFactory.SCOPE_PROTOTYPE)
 public class ShortUrlController {
+
+    private static final Log log = LogFactory.getLog(ShortUrlController.class);
     @Autowired
     private IShortUrlService shortUrlService;
 
@@ -36,4 +41,5 @@ public class ShortUrlController {
         System.out.println("out createdShortUrl.........userTime:"+(System.currentTimeMillis()-start)+" ms");
         return "index";
     }
+
 }
