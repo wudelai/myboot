@@ -21,7 +21,7 @@ public class SchedulerConfig implements SchedulerFactoryBeanCustomizer {
         //重写已存在的job
         schedulerFactoryBean.setOverwriteExistingJobs(true);
         //启动延时(单位秒)
-        schedulerFactoryBean.setStartupDelay(10);
+        schedulerFactoryBean.setStartupDelay(0);
         //容器关闭时，停止任务
         schedulerFactoryBean.setWaitForJobsToCompleteOnShutdown(true);
     }
