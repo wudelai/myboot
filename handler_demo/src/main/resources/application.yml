@@ -1,0 +1,17 @@
+server:
+  port: 8085
+spring:
+  redis:
+    cluster:
+      nodes: 127.0.0.1:6380,127.0.0.1:6381,127.0.0.1:6382,127.0.0.1:6383,127.0.0.1:6384,127.0.0.1:6385
+    lettuce:
+      pool:
+        max-idle: 50
+        max-active: 50
+        max-wait: 1000ms
+        min-idle: 0
+  #上传文件大小控制
+  servlet:
+    multipart:
+      max-request-size: 200MB
+      max-file-size: 200MB

@@ -1,0 +1,12 @@
+server:
+  port: 8086
+spring:
+  redis:
+    cluster:
+      nodes: 127.0.0.1:6380,127.0.0.1:6381
+    lettuce:
+      pool:
+        max-idle: 50
+        max-active: 50
+        max-wait: 1000ms
+        min-idle: 0
