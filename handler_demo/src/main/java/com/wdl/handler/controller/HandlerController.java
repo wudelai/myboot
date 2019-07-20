@@ -48,7 +48,32 @@ public class HandlerController {
         log.info("============>>>>文件上传成功!文件大小：{}",i);
         return Results.success();
     }
-
+    @RequestMapping(value = "/fileUploadByHandler", method = RequestMethod.POST)
+    public ResultVO fileUploadByHandler(MultipartFile file) throws IOException {
+        log.info("============>>>>文件开始上传!");
+        if (file == null || file.isEmpty()) {
+            return Results.businessError(BusinessResultCode.FILE_EMPTY);
+        }
+        InputStream is = file.getInputStream();
+        String fileName = file.getOriginalFilename();
+        int fileNameLength = fileName.length();
+        String fileType = fileName.substring(fileName.lastIndexOf("."), fileNameLength);
+        if (fileType == null) {
+            return Results.businessError(BusinessResultCode.FILE_TYPE_INCORRECT);
+        }
+        //文件命名
+        File newFile = new File(FILE_ROOT_DIRECTORY);
+        if(!newFile.exists()){
+            newFile.mkdir();
+        }
+        String copyfileName = FILE_ROOT_DIRECTORY+(System.currentTimeMillis()) + "_" + (count++) + "_" + fileName;
+        log.info("=============>>>>文件上传路径:{}",copyfileName);
+        OutputStream os = new FileOutputStream(new File(copyfileName));
+        //复制文件
+        int  i= IOUtil.copy(is, os);
+        log.info("============>>>>文件上传成功!文件大小：{}",i);
+        return Results.success();
+    }
     /**
      * 获取全局计数器
      *
