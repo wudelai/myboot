@@ -41,7 +41,7 @@ public class MqCustomerContainer{
      */
     private void intiCustomer(){
         defaultCustomer = new DefaultCustomer();
-        defaultCustomer.registerMessageListener(new MqListenerConcurrently() {
+        defaultCustomer.registerMqListener(new MqListenerConcurrently() {
             @Override
             public void customeMessage(List<MqMessage> mqMessages) {
                 for (MqMessage mqMessage: mqMessages){
