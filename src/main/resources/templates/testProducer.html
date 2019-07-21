@@ -2,53 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主页面</title>
+    <title>消息发送页面</title>
     <script type="text/javascript" src="../static/jquery.js"></script>
+    <style>
+        #submitProducer{
+            width: 125px;
+            height: 40px;
+            color: white;
+            background-color: #168bbb;
+            border: solid;
+            font-size: 17px;
+            font-weight:bold;
+            font-family: 微软雅黑;
+        }
+        #key{
+            width: 50%;
+            height: 30px;
+            background-color: #F0F8FF;
+            border: solid;
+            border-color: aqua;
+            border-width:1px;
+        }
+        #tag{
+            width: 50%;
+            height: 30px;
+            background-color: #F0F8FF;
+            border: solid;
+            border-color: aqua;
+            border-width:1px;
+        }
+        #value{
+            width: 50%;
+            height: 400px;
+            background-color: #F0F8FF;
+            border: solid;
+            border-color: aqua;
+            border-width:1px;
+        }
+        span{
+            font-size: 17px;
+            font-weight:bold;
+            font-family: 微软雅黑;
+        }
+    </style>
 </head>
 <body>
+
+<form id="form1" >
+    <span>消息主键:</span><input type="text" id="key" class="key" name="key"><br><p></p>
+    <span>消息标签:</span><input type="text" id="tag" name="tag"><br><p></p>
+    <span>消息主体:</span><textarea id="value" name="value"></textarea><br><p></p>
+    <input type="button" value="发送消息" id="submitProducer">
+</form>
+
 <script type="text/javascript">
     $(function () {
         $("#submitProducer").click(function () {
             $.ajax({
-                async : false,    //表示请求是否异步处理
-                type : "post",    //请求类型
-                url : "http://localhost:8089/testProducer",//请求的 URL地址
-                dataType : "json",//返回的数据类型
-                data:$("#form1").serialize(),
+                async: false,    //表示请求是否异步处理
+                type: "post",    //请求类型
+                url: "http://localhost:8083/rocket/testProducer",//请求的 URL地址
+                dataType: "json",//返回的数据类型
+                data: $("#form1").serialize(),
                 success: function (data) {
-
-                    // var result = JSON.parse(data);
-                    // $("#add").bind("click", function() {
-                    $.MsgBox.Alert("消息发送结果", data);
-                    // });
-                    // var messageResult = "<table>\n" +
-                    //     "    <tr><td>SENDSTATUS:</td><td>"+result.sendStatus+"</td></tr>" +
-                    //     "    <tr><td>MESSAGEID:</td><td>"+result.msgId+"</td></tr>" +
-                    //     "    <tr><td>MESSAGE:</td><td>"+result.msg+"</td></tr>" +
-                    //     "</table>";
-                    // $("#resultDiv").html(messageResult);  //将数据显示在html页面
+                    // $.MsgBox.Alert("消息发送结果", data);
                 },
-                error:function (data) {
+                error: function (data) {
                     alert(data.msgId);
                 }
             })
         });
 
-        (function() {
+        (function () {
             $.MsgBox = {
-                    Alert: function(title, msg) {
+                Alert: function (title, msg) {
                     GenerateHtml("alert", title, msg);
                     btnOk(); //alert只是弹出消息，因此没必要用到回调函数callback
                     btnNo();
                 }
             }
             //生成Html
-            var GenerateHtml = function(type, title, msg) {
+            var GenerateHtml = function (type, title, msg) {
                 var result = msg;
                 var messageResult = "<table style='height: 500px'>\n" +
-                    "    <tr><td>SENDSTATUS:</td><td>"+result.sendStatus+"</td></tr>" +
-                    "    <tr><td>MESSAGEID:</td><td>"+result.msgId+"</td></tr>" +
-                    "    <tr><td>MESSAGE:</td><td>"+result.msg+"</td></tr>" +
+                    "    <tr><td>SENDSTATUS:</td><td>" + result.sendStatus + "</td></tr>" +
+                    "    <tr><td>MESSAGEID:</td><td>" + result.msgId + "</td></tr>" +
+                    "    <tr><td>MESSAGE:</td><td>" + JSON.parse(result.msg) + "</td></tr>" +
                     "</table>";
                 var _html = "";
                 _html += '<div id="mb_box"></div><div id="mb_con"><span id="mb_tit">' + title + '</span>';
@@ -64,7 +103,7 @@
             }
 
             //生成Css
-            var GenerateCss = function() {
+            var GenerateCss = function () {
                 $("#mb_box").css({
                     width: '100%',
                     height: '100%',
@@ -111,7 +150,7 @@
                     textAlign: 'center',
                     lineHeight: '16px',
                     cursor: 'pointer',
-                    borderRadius: '12px',
+                    borderRadius: '16px',
                     fontFamily: '微软雅黑'
                 });
                 $("#mb_btnbox").css({
@@ -132,12 +171,12 @@
                     marginLeft: '20px'
                 });
                 //右上角关闭按钮hover样式
-                $("#mb_ico").hover(function() {
+                $("#mb_ico").hover(function () {
                     $(this).css({
                         backgroundColor: 'Red',
                         color: 'White'
                     });
-                }, function() {
+                }, function () {
                     $(this).css({
                         backgroundColor: '#DDD',
                         color: 'black'
@@ -154,8 +193,8 @@
                 });
             }
             //确定按钮事件
-            var btnOk = function(callback) {
-                $("#mb_btn_ok").click(function() {
+            var btnOk = function (callback) {
+                $("#mb_btn_ok").click(function () {
                     $("#mb_box,#mb_con").remove();
                     if (typeof(callback) == 'function') {
                         callback();
@@ -163,21 +202,14 @@
                 });
             }
             //取消按钮事件
-            var btnNo = function() {
-                $("#mb_btn_no,#mb_ico").click(function() {
+            var btnNo = function () {
+                $("#mb_btn_no,#mb_ico").click(function () {
                     $("#mb_box,#mb_con").remove();
                 });
             }
         })();
     });
 </script>
-<form id="form1">
-    key:<input type="text" id="key" class="key" name="key"><br>
-    tag:<input type="text" id="tag" name="tag"><br>
-    msg:<textarea  id="value" name="value" style="width: 50%;height: 500px"></textarea><br>
-    <input type="button" value="testProducer" id="submitProducer">
-</form>
-<div id="resultDiv"></div>
 
 </body>
 </html>

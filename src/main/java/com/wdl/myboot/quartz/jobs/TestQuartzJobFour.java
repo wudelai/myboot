@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
-@TriggerProperties(jobDetailName = "TestQuartzJobFourJobDetail", triggerName = "TestQuartzJobFourTrigger", triggerCron = "0/5 * * * * ?", triggerCronPropertiesName = "task.quartz.trigger.properties.testquartzron", groupName = "test_defalt_group")
+@TriggerProperties(jobDetailName = "TestQuartzJobFourJobDetail", triggerName = "TestQuartzJobFourTrigger", triggerCron = "${task.quartz.trigger.properties.testquartzron}", groupName = "test_defalt_group")
 public class TestQuartzJobFour extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {

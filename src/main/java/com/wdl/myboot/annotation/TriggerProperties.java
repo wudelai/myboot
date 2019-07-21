@@ -25,13 +25,7 @@ public @interface TriggerProperties {
     /**
      * 表达式
      */
-    String triggerCron() default "";
-
-    /**
-     * 配置项获取表达式的配置项名称
-     */
-    String triggerCronPropertiesName() default "";
-
+    String triggerCron();
     /**
      * 分组名称
      */

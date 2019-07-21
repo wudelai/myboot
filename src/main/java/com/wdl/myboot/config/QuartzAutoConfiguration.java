@@ -67,14 +67,8 @@ public class QuartzAutoConfiguration implements BeanDefinitionRegistryPostProces
                     String triggerName = StringUtils.hasText(annotation.triggerName()) ? annotation.triggerName() : jobName + JOB_SUFIX;
                     //优先使用注入的值（没有则取默认值）
                     String groupName = StringUtils.hasText(annotation.triggerName()) ? annotation.groupName() : DEFAULT_GROUP_NAME;
-                    String triggerCronPropertiesName = annotation.triggerCronPropertiesName();
-                    String cron;
-                    //优先使用配置项配置的表达式（没有则取注解值）
-                    if (StringUtils.hasText(triggerCronPropertiesName)){
-                        cron = binder.bind(annotation.triggerCronPropertiesName(), Bindable.of(String.class)).get();
-                    }else{
-                        cron = annotation.triggerCron();
-                    }
+                    //表达式支持使用占位符
+                    String cron = this.environment.resolvePlaceholders(annotation.triggerCron());
                     if (!StringUtils.hasText(cron)){
                         log.warn("==============》job类<{}>没有配置表达式",jobClass.getName());
                         continue;
